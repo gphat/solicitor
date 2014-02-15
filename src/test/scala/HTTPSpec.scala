@@ -1,0 +1,39 @@
+package test
+
+import solicitor.Client
+import solicitor.backend.HTTP
+import org.specs2.mutable.Specification
+import org.specs2.specification.Scope
+
+class APISpec extends Specification {
+
+  sequential
+
+  "HTTP Backend" should {
+
+    "handle 200" in new httpBin {
+
+      val res = client.getValue("get")
+      res must beSome
+      res.get must contain("origin")
+    }
+
+    "handle 404" in new httpBin {
+
+      client.getValue("getXXX") must beNone
+    }
+
+    "handle no answer" in new httpNope {
+
+      client.getValue("getXXX") must beNone
+    }
+  }
+}
+
+trait httpBin extends Scope {
+  val client = new Client(backend = new HTTP("http://httpbin.org"))
+}
+
+trait httpNope extends Scope {
+  val client = new Client(backend = new HTTP("http://thisdomainprobablywonteverexist.com"))
+}
