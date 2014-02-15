@@ -1,10 +1,10 @@
-organization := "mufti"
+organization := "solicitor"
 
-name := "mufti"
+name := "solicitor"
 
-version := "2.0.8"
+version := "1.0.0"
 
-scalaVersion := "2.10.0"
+scalaVersion := "2.10.3"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
