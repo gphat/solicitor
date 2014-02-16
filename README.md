@@ -13,6 +13,7 @@ Solicitor is new and likely has some flaws and missing pieces. Here are some
 known TODOs:
 
 * Caching for the HTTP backend
+* Ignore comment and empty lines for HTTP backend (documentation in the files is the idea)
 * Percentage chance enabling, like "on 50% of the time"
 
 # Goals
