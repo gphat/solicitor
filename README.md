@@ -4,7 +4,7 @@ Solicitor is small library for feature flags and configuration. Feature flags
 are a way of controlling the availaibility of features in your application. You
 can learn more about the [idea of feature flags](http://code.flickr.net/2009/12/02/flipping-out/).
 
-Your flag names are exected to be in the form of `foo/bar/baz`. The slashes
+Your flag names are expected to be in the form of `foo/bar/baz`. The slashes
 promote namespacing and lend themselves to clever use in backends.
 
 # Status
