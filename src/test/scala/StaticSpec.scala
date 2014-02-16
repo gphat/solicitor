@@ -1,11 +1,11 @@
 package test
 
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import solicitor.Client
-import solicitor.backend.Static
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
+import scala.concurrent.Await
+import scala.concurrent.duration._
+import solicitor.backend.Static
+import solicitor.Client
 
 class StaticSpec extends Specification {
 

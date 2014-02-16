@@ -1,11 +1,11 @@
 package test
 
-import solicitor.Client
-import solicitor.backend.HTTP
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
+import solicitor.backend.HTTP
+import solicitor.Client
 
-class APISpec extends Specification {
+class HTTPSpec extends Specification {
 
   sequential
 

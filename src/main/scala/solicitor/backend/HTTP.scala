@@ -19,12 +19,12 @@ class HTTP(baseUrl: String) extends Backend with Logging {
     Http(req).map({ res =>
       res.getStatusCode match {
         case 200 => Some(res.getResponseBody)
-        case _ => None
-      }
-    }).recover({
-      case x: Throwable => {
-        error("Exception fetching " + req.url.toString + ": " + x.getMessage)
-        None
+        case _ => {
+          // Anything aside from a 200 we'll consider a failure. Log it
+          warn("Bad HTTP Code: " + res.getStatusCode)
+          warn("Reason: " + res.getResponseBody)
+          None
+        }
       }
     })
   }
