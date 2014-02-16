@@ -7,6 +7,14 @@ can learn more about the [idea of feature flags](http://code.flickr.net/2009/12/
 Your flag names are exected to be in the form of `foo/bar/baz`. The slashes
 promote namespacing and lend themselves to clever use in backends.
 
+# Status
+
+Solicitor is new and likely has some flaws and missing pieces. Here are some
+known TODOs:
+
+* Caching for the HTTP backend
+* Percentage chance enabling, like "on 50% of the time"
+
 # Goals
 
 Solicitor's goals are to enable runtime modification of features in a backend
