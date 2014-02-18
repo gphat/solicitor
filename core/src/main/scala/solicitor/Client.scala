@@ -14,7 +14,7 @@ class Client(backend: Backend, timeout: Duration = Duration(1, SECONDS)) {
    * @param default A default value in the event of a failure to retrieve.
    */
   def isEnabled(name: String, default: Boolean = false): Boolean =
-    getValueAsBoolean(name, Some(default)).getOrElse(false)
+    getBoolean(name, Some(default)).getOrElse(false)
 
   /**
    * Returns false if the name supplied returns a true value.
@@ -30,8 +30,8 @@ class Client(backend: Backend, timeout: Duration = Duration(1, SECONDS)) {
    * @param name The name to fetch.
    * @param default A default value in the event of a failure to retrieve.
    */
-  def getValue(name: String, default: Option[String] = None): Option[String] =
-    Try(Await.result(backend.getValue(name), timeout)).getOrElse(default)
+  def getString(name: String, default: Option[String] = None): Option[String] =
+    Try(Await.result(backend.getString(name), timeout)).getOrElse(default)
 
   /**
    * Return a value, converted to Boolean, for the given name.
@@ -39,8 +39,8 @@ class Client(backend: Backend, timeout: Duration = Duration(1, SECONDS)) {
    * @param name The name to fetch
    * @param default A default value in the event of a failure to retrieve.
    */
-  def getValueAsBoolean(name: String, default: Option[Boolean] = None): Option[Boolean] =
-    Try(Await.result(backend.getValueAsBoolean(name), timeout)).getOrElse(default)
+  def getBoolean(name: String, default: Option[Boolean] = None): Option[Boolean] =
+    Try(Await.result(backend.getBoolean(name), timeout)).getOrElse(default)
 
   /**
    * Return a value, converted to Double, for the given name.
@@ -48,8 +48,8 @@ class Client(backend: Backend, timeout: Duration = Duration(1, SECONDS)) {
    * @param name The name to fetch
    * @param default A default value in the event of a failure to retrieve.
    */
-  def getValueAsDouble(name: String, default: Option[Double] = None): Option[Double] =
-    Try(Await.result(backend.getValueAsDouble(name), timeout)).getOrElse(default)
+  def getDouble(name: String, default: Option[Double] = None): Option[Double] =
+    Try(Await.result(backend.getDouble(name), timeout)).getOrElse(default)
 
   /**
    * Closes any resources allocated by Solicitor and it's backends.

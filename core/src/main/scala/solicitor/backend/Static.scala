@@ -18,5 +18,5 @@ class Static(values: Map[String,String]) extends Backend {
   /**
    * Gets a value from the Static map. No type converstion takes place.
    */
-  def getValue(name: String): Future[Option[String]] = future { values.get(name) }
+  def getString(name: String): Future[Option[String]] = future { values.get(name) }
 }

@@ -26,7 +26,7 @@ trait Backend {
    *
    * @param name Name of key
    */
-  def getValue(name: String): Future[Option[String]]
+  def getString(name: String): Future[Option[String]]
 
   /**
    * Get a value and convert the result to boolean. Works only with
@@ -34,8 +34,8 @@ trait Backend {
    *
    * @param name Name of key
    */
-  def getValueAsBoolean(name: String): Future[Option[Boolean]] = {
-    getValue(name).map({ maybeValue =>
+  def getBoolean(name: String): Future[Option[Boolean]] = {
+    getString(name).map({ maybeValue =>
       maybeValue.map({ v =>
         stringToBoolean(v)
       })
@@ -48,8 +48,8 @@ trait Backend {
    *
    * @param name Name of key
    */
-  def getValueAsDouble(name: String): Future[Option[Double]] = {
-    getValue(name).map({ maybeValue =>
+  def getDouble(name: String): Future[Option[Double]] = {
+    getString(name).map({ maybeValue =>
       // Use a flatMap here because our Try returns an Option.
       maybeValue.flatMap({ v =>
         Try({ Some(v.toDouble) }).getOrElse(None)

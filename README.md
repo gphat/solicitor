@@ -136,15 +136,15 @@ if(solicitor.isDisabled("foo")) {
 ## Raw Value Methods
 
 ```scala
-val t1 = solicitor.getValue("baz") // String!
+val t1 = solicitor.getString("baz") // String!
 
 // These methods default to None if unparseable. See Types above.
-val t2 = solicitor.getValueAsBoolean("bar") // Option[Boolean]
-val t3 = solicitor.getValueAsDouble("foo") // Option[Double]
+val t2 = solicitor.getBoolean("bar") // Option[Boolean]
+val t3 = solicitor.getDouble("foo") // Option[Double]
 
 // With Defaults
-val t4 = solicitor.getValueAsBoolean("bar", Some(true)) // Option[Boolean]
-val t5 = solicitor.getValueAsDouble("foo", Some(100)) // Option[Double]
+val t4 = solicitor.getBoolean("bar", Some(true)) // Option[Boolean]
+val t5 = solicitor.getDouble("foo", Some(100)) // Option[Double]
 
 ```
 

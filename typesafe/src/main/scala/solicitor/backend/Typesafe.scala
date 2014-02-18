@@ -12,19 +12,19 @@ class Typesafe(url: String) extends Backend {
 
   val config = ConfigFactory.parseURL(new URL(url))
 
-  override def getValue(name: String): Future[Option[String]] = {
+  override def getString(name: String): Future[Option[String]] = {
     future {
       Try(Some(config.getString(name))).getOrElse(None)
     }
   }
 
-  override def getValueAsBoolean(name: String): Future[Option[Boolean]] = {
+  override def getBoolean(name: String): Future[Option[Boolean]] = {
     future {
       Try(Some(config.getBoolean(name))).getOrElse(None)
     }
   }
 
-  override def getValueAsDouble(name: String): Future[Option[Double]] = {
+  override def getDouble(name: String): Future[Option[Double]] = {
     future {
       Try(Some(config.getDouble(name))).getOrElse(None)
     }

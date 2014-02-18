@@ -25,7 +25,7 @@ class HTTP(baseUrl: String) extends Backend with Logging {
    *
    * @param The name to fetch.
    */
-  override def getValue(name: String): Future[Option[String]] = {
+  override def getString(name: String): Future[Option[String]] = {
     val req = url(baseUrl) / name
     debug("Fetching " + req.url.toString)
     doRequest(req)
