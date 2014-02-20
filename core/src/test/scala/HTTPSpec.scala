@@ -13,19 +13,19 @@ class HTTPSpec extends Specification {
 
     "handle 200" in new httpBin {
 
-      val res = client.getValue("get")
+      val res = client.getString("get")
       res must beSome
       res.get must contain("origin")
     }
 
     "handle 404" in new httpBin {
 
-      client.getValue("getXXX") must beNone
+      client.getString("getXXX") must beNone
     }
 
     "handle no answer" in new httpNope {
 
-      client.getValue("getXXX") must beNone
+      client.getString("getXXX") must beNone
     }
   }
 }

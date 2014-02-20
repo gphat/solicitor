@@ -15,25 +15,25 @@ class ConversionSpec extends Specification {
 
     "handle string" in new exampleMap {
 
-      val res = client.getValue("string")
+      val res = client.getString("string")
       res must beSome
       res.get must contain("asdasdasd")
     }
 
     "handle double" in new exampleMap {
 
-      val res = client.getValueAsDouble("double")
+      val res = client.getDouble("double")
       res must beSome
       res.get must beEqualTo(0.34D)
     }
 
     "handle booleans" in new exampleMap {
-      client.getValueAsBoolean("one").get must beEqualTo(false)
-      client.getValueAsBoolean("zero").get must beEqualTo(false)
-      client.getValueAsBoolean("booleanTrue").get must beEqualTo(true)
-      client.getValueAsBoolean("booleanFalse").get must beEqualTo(false)
-      client.getValueAsBoolean("booleanTRue").get must beEqualTo(true)
-      client.getValueAsBoolean("booleanFAlse").get must beEqualTo(false)
+      client.getBoolean("one").get must beEqualTo(false)
+      client.getBoolean("zero").get must beEqualTo(false)
+      client.getBoolean("booleanTrue").get must beEqualTo(true)
+      client.getBoolean("booleanFalse").get must beEqualTo(false)
+      client.getBoolean("booleanTRue").get must beEqualTo(true)
+      client.getBoolean("booleanFAlse").get must beEqualTo(false)
     }
   }
 }

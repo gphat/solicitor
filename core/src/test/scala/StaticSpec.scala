@@ -15,14 +15,14 @@ class StaticSpec extends Specification {
 
     "handle present" in new staticMap {
 
-      val res = client.getValue("foo")
+      val res = client.getString("foo")
       res must beSome
       res.get must contain("bar")
     }
 
     "handle absent" in new httpNope {
 
-      client.getValue("getXXX") must beNone
+      client.getString("getXXX") must beNone
     }
   }
 }

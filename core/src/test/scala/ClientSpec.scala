@@ -15,22 +15,22 @@ class ClientSpec extends Specification {
   "Client" should {
 
     "handle missing values" in new badBackend {
-      client.getValue("three") must beNone
+      client.getString("three") must beNone
     }
 
     "handle defaults" in new badBackend {
-      client.getValueAsBoolean("three", Some(true)).get must beEqualTo(true)
-      client.getValueAsBoolean("three", Some(false)).get must beEqualTo(false)
+      client.getBoolean("three", Some(true)).get must beEqualTo(true)
+      client.getBoolean("three", Some(false)).get must beEqualTo(false)
 
-      client.getValueAsDouble("three", Some(1D)).get must beEqualTo(1D)
+      client.getDouble("three", Some(1D)).get must beEqualTo(1D)
 
-      client.getValue("foo", Some("bar")).get must beEqualTo("bar")
+      client.getString("foo", Some("bar")).get must beEqualTo("bar")
     }
   }
 }
 
 class FailingBackend extends Backend {
-  def getValue(name: String): Future[Option[String]] = future {
+  def getString(name: String): Future[Option[String]] = future {
     throw new RuntimeException("BLAH BLAAH")
     // return None
   }

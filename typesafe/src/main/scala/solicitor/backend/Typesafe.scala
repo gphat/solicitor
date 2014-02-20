@@ -1,4 +1,4 @@
-package solicitior.backend
+package solicitor.backend
 
 import com.typesafe.config.ConfigFactory
 import java.net.URL
@@ -8,9 +8,13 @@ import scala.util.Try
 import solicitor.Backend
 
 // XXX A reload time, perhaps?
-class Typesafe(url: String) extends Backend {
+class Typesafe(url: Option[String] = None) extends Backend {
 
-  val config = ConfigFactory.parseURL(new URL(url))
+  // If we didn't get a URL, use load to pick things up
+  // from the classpath.
+  val config = url.map({
+    u => ConfigFactory.parseURL(new URL(u))
+  }).getOrElse(ConfigFactory.load)
 
   override def getString(name: String): Future[Option[String]] = {
     future {
