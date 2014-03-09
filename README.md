@@ -7,6 +7,16 @@ can learn more about the [idea of feature flags](http://code.flickr.net/2009/12/
 Your flag names are expected to be in the form of `foo/bar/baz`. The slashes
 promote namespacing and lend themselves to clever use in backends.
 
+# Features
+
+* Boolean flags
+* Percentage change (i.e. on for 10% of users)
+* Multiple backends
+    - Static (for testing and stubbing)
+    - HTTP paths (e.g. "foo/bar" fetches a value from a example.com/foo/bar)
+    - [Typesafe config](https://github.com/typesafehub/config)
+
+
 # Status
 
 Solicitor is new and likely has some flaws and missing pieces. Here are some
@@ -14,6 +24,7 @@ known TODOs:
 
 * Caching for the HTTP backend
 * Ignore comment and empty lines for HTTP backend (documentation in the files is the idea)
+* Periodic reload of Typesafe config
 
 # Goals
 
