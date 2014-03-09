@@ -8,7 +8,6 @@ object Build extends Build {
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     publishTo := Some(Resolver.file("file", new File("/Users/gphat/src/mvn-repo/releases"))),
     libraryDependencies ++= Seq(
-      "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
       "org.clapper" %% "grizzled-slf4j" % "1.0.1",
       "org.specs2" %% "specs2" % "1.14" % "test",
       "org.slf4j" % "slf4j-simple" % "1.7.5" % "test"
@@ -24,11 +23,26 @@ object Build extends Build {
     )
   )
 
+  lazy val http = Project(
+    id = "solicitor-http",
+    base = file("http"),
+    settings = solicitorSettings ++ Seq(
+      description := "HTTP Config Backend",
+      version := "1.0",
+      libraryDependencies ++= Seq(
+        "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
+        "commons-pool" % "commons-pool" % "1.4"
+      )
+    )
+  ) dependsOn(
+    root
+  )
+
   lazy val typesafe = Project(
     id = "solicitor-typesafe",
     base = file("typesafe"),
     settings = solicitorSettings ++ Seq(
-      description := "Typesafe Config",
+      description := "Typesafe Config Backend",
       version := "1.0",
       libraryDependencies ++= Seq(
         "com.typesafe" % "config" % "1.2.0"
