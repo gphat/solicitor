@@ -18,10 +18,13 @@ import spray.http.HttpMethods._
  * responses are assumed to be plain text and any status code other than 200
  * is considered a failure and returns None.
  * {{{
- * XXX val client = new Client(backend = HTTP(baseUrl = "http://www.example.com"))
+ * val client = new Client(backend = HTTP(hosts = Seq("www.example.com", 80)))
  * // Fetches http://www.example.com/foo/bar
  * val fooBar = client.getValue("foo/bar") // String
  * }}}
+ *
+ * This backend uses the Spray Host-level API and randomly chooses one
+ * of the supplied hosts for each GET request.
  */
 class HTTP(hosts: Seq[(String, Int)]) extends Backend with Logging {
 
@@ -31,8 +34,9 @@ class HTTP(hosts: Seq[(String, Int)]) extends Backend with Logging {
   implicit val timeout = Timeout(10, TimeUnit.SECONDS) // XXX
 
   // Iterate through the passed in hosts & ports and ask spray to create
-  // a host connector.
-  val pipes = hosts.map({ h: (String, Int) =>
+  // a SendReceive function for each host requested.
+  val pipes: Seq[Future[SendReceive]] = hosts.map({ h: (String, Int) =>
+    // XXX Needto learn why this is a for comprehension…
     for(
       Http.HostConnectorInfo(connector, _) <-
         IO(Http) ? Http.HostConnectorSetup(host = h._1, port = h._2)
@@ -51,9 +55,18 @@ class HTTP(hosts: Seq[(String, Int)]) extends Backend with Logging {
   override def getString(name: String): Future[Option[String]] = {
     
     val request = Get("/" + name)
-    pipes(Random.nextInt(pipeCount)).flatMap(_(request)).map({ r => Some(r.entity.asString) })
-    // val response = (IO(Http) ? HttpRequest(GET, "/" + name)).mapTo[HttpResponse]
-    // response.map({ r: HttpRequest => Some(r.entity.asString) })
+    // Randomly select a pipelined host from the iniail list we were
+    // given and use it.
+    pipes(Random.nextInt(pipeCount)).flatMap(_(request)).map({ response =>
+      response.status.intValue match {
+        case 200 => Some(response.entity.asString)
+        case _ => {
+          warn("Bad HTTP Code: " + response.status.intValue)
+          warn("Reason: " + response.entity.asString)
+          None
+        }
+      }
+    })
   }
 
   override def shutdown = Http.CloseAll

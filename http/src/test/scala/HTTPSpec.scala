@@ -18,15 +18,15 @@ class HTTPSpec extends Specification {
       res.get must contain("123")
     }
 
-    // "handle 404" in new httpBin {
+    "handle 404" in new httpBin {
 
-    //   client.getString("getXXX") must beNone
-    // }
+      client.getString("getXXX") must beNone
+    }
 
-    // "handle no answer" in new httpNope {
+    "handle no answer" in new httpNope {
 
-    //   client.getString("getXXX") must beNone
-    // }
+      client.getString("getXXX") must beNone
+    }
   }
 }
 
