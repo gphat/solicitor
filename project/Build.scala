@@ -6,7 +6,12 @@ object Build extends Build {
   lazy val solicitorSettings = Defaults.defaultSettings ++ Seq(
     crossScalaVersions := Seq("2.10.3"),
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
+    scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
     publishTo := Some(Resolver.file("file", new File("/Users/gphat/src/mvn-repo/releases"))),
+    resolvers ++= Seq(
+      "spray repo" at "http://repo.spray.io",
+      "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
+    ),
     libraryDependencies ++= Seq(
       "org.clapper" %% "grizzled-slf4j" % "1.0.1",
       "org.specs2" %% "specs2" % "1.14" % "test",
@@ -30,8 +35,9 @@ object Build extends Build {
       description := "HTTP Config Backend",
       version := "1.0",
       libraryDependencies ++= Seq(
-        "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-        "commons-pool" % "commons-pool" % "1.4"
+        "com.typesafe.akka" %% "akka-actor" % "2.3.0",
+        "io.spray" % "spray-can" % "1.3.0",
+        "io.spray" % "spray-client" % "1.3.0"
       )
     )
   ) dependsOn(
