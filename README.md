@@ -13,7 +13,7 @@ promote namespacing and lend themselves to clever use in backends.
 * Percentage change (i.e. on for 10% of users)
 * Multiple backends
     - Static (for testing and stubbing)
-    - HTTP paths (e.g. "foo/bar" fetches a value from a example.com/foo/bar)
+    - HTTP paths with support for multiple, random host pools (e.g. "foo/bar" fetches a value from a example.com/foo/bar)
     - [Typesafe config](https://github.com/typesafehub/config)
 
 
@@ -74,9 +74,10 @@ values.
 
 ## HTTP
 
-The HTTP backend makes HTTP requests to url in the form of: `baseURL + "/" + key.
-Therefore if your `baseURL` is `http://www.example.com` then a request for
-`foo/bar` will result in a GET request to `http://www.example.com`.
+The HTTP backend uses [Spray's HTTP Client](http://spray.io/documentation/spray-can/http-client/)
+to make HTTP requests to url in the form of: `host + "/" + key`.
+Therefore if your `host` is `www.example.com` then a request for
+`foo/bar` will result in a GET request to `http://www.example.com/foo/bar`.
 
 ### Notes
 
@@ -93,7 +94,7 @@ import solicitor.Client
 import solicitor.backend.HTTP
 
 val solicitor = new Client(
-  background = new HTTP(baseURL = "http://example.com")
+  background = new HTTP(hosts = Seq("example.com", 80))
 )
 ```
 
