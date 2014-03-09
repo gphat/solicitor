@@ -14,7 +14,6 @@ known TODOs:
 
 * Caching for the HTTP backend
 * Ignore comment and empty lines for HTTP backend (documentation in the files is the idea)
-* Percentage chance enabling, like "on 50% of the time"
 
 # Goals
 
@@ -116,7 +115,8 @@ import solicitor.backend.Static
 
 val solicitor = new Client(
   backend = new Static(Map(
-    "foo" -> 1
+    "foo" -> "true",
+    "bar" -> "0.5"
   ))
 )
 ```
@@ -130,6 +130,14 @@ if(solicitor.isEnabled("foo")) {
 
 if(solicitor.isDisabled("foo")) {
   // Do something!
+}
+```
+
+## Percentage Chance of Activation
+
+```scala
+if(solicitor.decideEnabled("bar")) {
+  // Should happen about 50% of the time!
 }
 ```
 
