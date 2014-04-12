@@ -36,10 +36,9 @@ class HTTP(hosts: Seq[(String, Int)]) extends Backend with Logging {
   // Iterate through the passed in hosts & ports and ask spray to create
   // a SendReceive function for each host requested.
   val pipes: Seq[Future[SendReceive]] = hosts.map({ h: (String, Int) =>
-    // XXX Needto learn why this is a for comprehension…
     for(
       Http.HostConnectorInfo(connector, _) <-
-        IO(Http) ? Http.HostConnectorSetup(host = h._1, port = h._2)
+        (IO(Http) ? Http.HostConnectorSetup(host = h._1, port = h._2))
     ) yield sendReceive(connector)
   })
 

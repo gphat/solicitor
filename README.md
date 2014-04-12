@@ -1,6 +1,6 @@
 # Solicitor
 
-Solicitor is small library for feature flags and configuration. Feature flags
+Solicitor is small library for feature flags and simple configuration. Feature flags
 are a way of controlling the availaibility of features in your application. You
 can learn more about the [idea of feature flags](http://code.flickr.net/2009/12/02/flipping-out/).
 
@@ -10,7 +10,7 @@ promote namespacing and lend themselves to clever use in backends.
 # Features
 
 * Boolean flags
-* Percentage change (i.e. on for 10% of users)
+* Percentage chance (i.e. on for 10% of users)
 * Multiple backends
     - Static (for testing and stubbing)
     - HTTP paths with support for multiple, random host pools (e.g. "foo/bar" fetches a value from a example.com/foo/bar)
@@ -24,7 +24,6 @@ known TODOs:
 
 * Caching for the HTTP backend
 * Ignore comment and empty lines for HTTP backend (documentation in the files is the idea)
-* Periodic reload of Typesafe config
 
 # Goals
 
@@ -45,6 +44,10 @@ values from the backend.  Examples:
 These are powerful features that, if implemented, can significantly reduce
 your time to resolution for production issues by avoiding the latency and
 complexity of deployments.
+
+*Note:* This library isn't meant to be configuration for your _entire_ application,
+as doing dynamic configuration is really hard. *This is for smaller, critical
+values that you can easily reason about being able to change at any time.&
 
 # Types
 
@@ -89,7 +92,7 @@ third parties of value changes.
 
 ### Example
 
-```scala        
+```scala
 import solicitor.Client
 import solicitor.backend.HTTP
 
@@ -119,7 +122,7 @@ val solicitor = new Client(
 
 Here are some examples of common use cases of Solicitor.
 
-## Instantiation 
+## Instantiation
 
 ```scala
 import solicitor.Client
