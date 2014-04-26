@@ -44,6 +44,22 @@ object Build extends Build {
     root
   )
 
+  lazy val consul = Project(
+    id = "solicitor-consul",
+    base = file("consul"),
+    settings = solicitorSettings ++ Seq(
+      description := "Consul KV Backend",
+      version := "1.0",
+      libraryDependencies ++= Seq(
+        "commons-codec" % "commons-codec" % "1.9",
+        "io.spray" %%  "spray-json" % "1.2.6"
+      )
+    )
+  ) dependsOn(
+    http
+  )
+
+
   lazy val typesafe = Project(
     id = "solicitor-typesafe",
     base = file("typesafe"),

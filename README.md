@@ -15,7 +15,7 @@ promote namespacing and lend themselves to clever use in backends.
     - Static (for testing and stubbing)
     - HTTP paths with support for multiple, random host pools (e.g. "foo/bar" fetches a value from a example.com/foo/bar)
     - [Typesafe config](https://github.com/typesafehub/config)
-
+    - [Consul](http://www.consul.io/)'s KV [HTTP API](http://www.consul.io/docs/agent/http.html)
 
 # Status
 
@@ -118,6 +118,33 @@ val solicitor = new Client(
 )
 ```
 
+## Consul
+
+The Consul backend leverages the existing HTTP backend but formats it's requests
+to match [Consul's API for KV storage](http://www.consul.io/docs/agent/http.html).
+
+Just like the HTTP backend you can specify multiple hosts. You should do that
+to take advantage of Consul's distributed KV.
+
+### Notes
+
+* It is assumed that all values are Base64 encoded UTF-8 strings.
+* There is no facility for adding a `dc` parameter to the query. Requests will use the agent's DC as per Consul's documentation.
+
+### Example
+
+```scala
+import solicitor.Client
+import solicitor.backend.Consul
+
+val solicitor = new Client(
+  background = new Consul(hosts = Seq(
+    "agent1.example.com", 8500,
+    "agent2.example.com", 8500
+  ))
+)
+```
+
 # Using Solicitor
 
 Here are some examples of common use cases of Solicitor.
@@ -171,3 +198,10 @@ val t5 = solicitor.getDouble("foo", Some(100)) // Option[Double]
 
 ```
 
+# Testing
+
+Note that tests expect a local HTTP and Consul instance that respond to
+queries:
+
+* HTTP: Port 8000, /foo/bar should contain 123
+* Consul: KV "poop" should return "butt"
