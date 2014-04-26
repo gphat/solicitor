@@ -4,7 +4,7 @@ import Keys._
 object Build extends Build {
 
   lazy val solicitorSettings = Defaults.defaultSettings ++ Seq(
-    crossScalaVersions := Seq("2.10.3"),
+    crossScalaVersions := Seq("2.10.4"),
     scalaVersion <<= (crossScalaVersions) { versions => versions.head },
     scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
     publishTo := Some(Resolver.file("file", new File("/Users/gphat/src/mvn-repo/releases"))),

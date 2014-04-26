@@ -52,9 +52,9 @@ class HTTP(hosts: Seq[(String, Int)]) extends Backend with Logging {
    * @param name The name to fetch.
    */
   override def getString(name: String): Future[Option[String]] = {
-    
+
     val request = Get("/" + name)
-    // Randomly select a pipelined host from the iniail list we were
+    // Randomly select a pipelined host from the initial list we were
     // given and use it.
     pipes(Random.nextInt(pipeCount)).flatMap(_(request)).map({ response =>
       response.status.intValue match {
