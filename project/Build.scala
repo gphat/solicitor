@@ -73,4 +73,18 @@ object Build extends Build {
   ) dependsOn(
     root
   )
+
+  lazy val zk = Project(
+    id = "solicitor-zk",
+    base = file("zk"),
+    settings = solicitorSettings ++ Seq(
+      description := "Zookeeper Backend",
+      version := "1.0",
+      libraryDependencies ++= Seq(
+        "org.apache.curator" % "curator-recipes" % "2.4.2"
+      )
+    )
+  ) dependsOn(
+    root
+  )
 }

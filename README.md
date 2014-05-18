@@ -16,6 +16,7 @@ promote namespacing and lend themselves to clever use in backends.
     - HTTP paths with support for multiple, random host pools (e.g. "foo/bar" fetches a value from a example.com/foo/bar)
     - [Typesafe config](https://github.com/typesafehub/config)
     - [Consul](http://www.consul.io/)'s KV [HTTP API](http://www.consul.io/docs/agent/http.html)
+    - [Zookeeper](http://zookeeper.apache.org/)
 
 # Status
 
@@ -24,6 +25,7 @@ known TODOs:
 
 * Caching for the HTTP backend
 * Ignore comment and empty lines for HTTP backend (documentation in the files is the idea)
+* Zookeeper is experimental
 
 # Goals
 
@@ -97,7 +99,7 @@ import solicitor.Client
 import solicitor.backend.HTTP
 
 val solicitor = new Client(
-  background = new HTTP(hosts = Seq("example.com", 80))
+  background = new HTTP(hosts = Seq(("example.com", 80)))
 )
 ```
 
@@ -144,6 +146,31 @@ val solicitor = new Client(
   ))
 )
 ```
+
+## Zookeeper
+
+The Zookeeper backend uses [Apache Curator](http://curator.apache.org/)'s
+[NodeCache](http://curator.apache.org/curator-recipes/node-cache.html) recipe.
+
+### Notes
+
+The data is not guaranteed to be in sync with the store, but will eventually
+be as data propogates through the ZK cluster and the NodeCache gets the new
+information. Due to latency in establishing the NodeCache the first request for
+a key seems to always return a None and therefore your defaults will be important!
+
+### Example
+```scala
+import solicitor.Client
+import solicitor.backend.Zk
+
+val solicitor = new Client(
+  background = new Zk(hosts = Seq(
+    "zk1.example.com", 2181,
+    "zk1.example.com", 2181
+  ))
+)
+``
 
 # Using Solicitor
 
