@@ -99,7 +99,7 @@ import solicitor.Client
 import solicitor.backend.HTTP
 
 val solicitor = new Client(
-  background = new HTTP(hosts = Seq(("example.com", 80)))
+  backend = new HTTP(hosts = Seq(("example.com", 80)))
 )
 ```
 
