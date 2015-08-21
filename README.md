@@ -49,7 +49,7 @@ complexity of deployments.
 
 *Note:* This library isn't meant to be configuration for your _entire_ application,
 as doing dynamic configuration is really hard. *This is for smaller, critical
-values that you can easily reason about being able to change at any time.&
+values that you can easily reason about being able to change at any time.*
 
 # Types
 
@@ -170,7 +170,7 @@ val solicitor = new Client(
     "zk1.example.com", 2181
   ))
 )
-``
+```
 
 # Using Solicitor
 
